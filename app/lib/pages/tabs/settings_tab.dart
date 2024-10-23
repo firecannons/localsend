@@ -8,7 +8,6 @@ import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/persistence/color_mode.dart';
 import 'package:localsend_app/pages/about/about_page.dart';
 import 'package:localsend_app/pages/changelog_page.dart';
-import 'package:localsend_app/pages/donation/donation_page.dart';
 import 'package:localsend_app/pages/language_page.dart';
 import 'package:localsend_app/pages/tabs/settings_tab_controller.dart';
 import 'package:localsend_app/provider/settings_provider.dart';
@@ -474,7 +473,7 @@ class SettingsTab extends StatelessWidget {
                   label: t.settingsTab.other.support,
                   buttonLabel: t.settingsTab.other.donate,
                   onTap: () async {
-                    await context.push(() => const DonationPage());
+                    await context.push(() => const AboutPage());
                   },
                 ),
                 _ButtonEntry(

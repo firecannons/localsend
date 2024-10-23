@@ -6,6 +6,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:localsend_app/config/theme.dart';
 import 'package:localsend_app/gen/strings.g.dart';
 import 'package:localsend_app/model/cross_file.dart';
@@ -37,6 +38,7 @@ enum FilePickerOption {
   file(Icons.description),
   folder(Icons.folder),
   media(Icons.image),
+  mediaNative(Icons.image),
   text(Icons.subject),
   app(Icons.apps),
   clipboard(Icons.paste);
@@ -53,6 +55,8 @@ enum FilePickerOption {
         return t.sendTab.picker.folder;
       case FilePickerOption.media:
         return t.sendTab.picker.media;
+      case FilePickerOption.mediaNative:
+        return t.sendTab.picker.mediaNative;
       case FilePickerOption.text:
         return t.sendTab.picker.text;
       case FilePickerOption.app:
@@ -69,6 +73,7 @@ enum FilePickerOption {
       // The file app is very limited.
       return [
         FilePickerOption.media,
+        FilePickerOption.mediaNative,
         FilePickerOption.text,
         FilePickerOption.clipboard,
         FilePickerOption.file,
@@ -80,6 +85,7 @@ enum FilePickerOption {
       return [
         FilePickerOption.file,
         FilePickerOption.media,
+        FilePickerOption.mediaNative,
         FilePickerOption.clipboard,
         FilePickerOption.text,
         FilePickerOption.folder,
@@ -119,6 +125,10 @@ class PickFileAction extends AsyncGlobalAction {
       case FilePickerOption.media:
         // ignore: use_build_context_synchronously
         await _pickMedia(context, ref);
+        break;
+      case FilePickerOption.mediaNative:
+        // ignore: use_build_context_synchronously
+        await _pickMediaNative(context, ref);
         break;
       case FilePickerOption.text:
         // ignore: use_build_context_synchronously
@@ -252,6 +262,31 @@ Future<void> _pickMedia(BuildContext context, Ref ref) async {
     await ref.redux(selectedSendingFilesProvider).dispatchAsync(AddFilesAction(
           files: result,
           converter: CrossFileConverters.convertAssetEntity,
+        ));
+  }
+}
+
+Future<void> _pickMediaNative(BuildContext context, Ref ref) async {
+  final ImagePicker picker = ImagePicker();
+  final List<XFile> result = await picker.pickMultipleMedia();
+  // ignore: use_build_context_synchronously
+  /*final List<AssetEntity>? result = await AssetPicker.pickAssets(
+    context,
+    pickerConfig: const AssetPickerConfig(maxAssets: 999, textDelegate: TranslatedAssetPickerTextDelegate()),
+  );
+
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    // restore brightness for Android
+    await sleepAsync(500);
+    if (context.mounted) {
+      await updateSystemOverlayStyleWithBrightness(oldBrightness);
+    }
+  });*/
+
+  if (result != null) {
+    await ref.redux(selectedSendingFilesProvider).dispatchAsync(AddFilesAction(
+          files: result,
+          converter: CrossFileConverters.convertXFile,
         ));
   }
 }

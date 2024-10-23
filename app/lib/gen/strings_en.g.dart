@@ -122,7 +122,7 @@ class _StringsSendTabEn {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Send';
+	String get title => 'Send (this is on local)';
 	late final _StringsSendTabSelectionEn selection = _StringsSendTabSelectionEn._(_root);
 	late final _StringsSendTabPickerEn picker = _StringsSendTabPickerEn._(_root);
 	String get shareIntentInfo => 'You can also use the "Share" feature of your mobile device to select files more easily.';
@@ -553,6 +553,7 @@ class _StringsSendTabPickerEn {
 	String get file => 'File';
 	String get folder => 'Folder';
 	String get media => 'Media';
+	String get mediaNative => 'Media (Native)';
 	String get text => 'Text';
 	String get app => 'App';
 	String get clipboard => 'Paste';

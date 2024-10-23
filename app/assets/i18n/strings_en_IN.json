@@ -59,6 +59,7 @@
       "file": "File",
       "folder": "Folder",
       "media": "Media",
+      "mediaNative": "Media (native)",
       "text": "Text",
       "app": "App",
       "clipboard": "Paste"
