@@ -248,7 +248,7 @@ Future<void> _pickMedia(BuildContext context, Ref ref) async {
   final List<AssetEntity>? result = await AssetPicker.pickAssets(
     context,
     pickerConfig: const AssetPickerConfig(maxAssets: 99999, textDelegate: TranslatedAssetPickerTextDelegate(),
-      pageSize: 12, specialPickerType: SpecialPickerType.noPreview),
+      pageSize: 12, specialPickerType: SpecialPickerType.dragSelect),
   );
 
   WidgetsBinding.instance.addPostFrameCallback((_) async {
